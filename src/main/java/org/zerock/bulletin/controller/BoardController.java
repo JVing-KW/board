@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zerock.bulletin.dto.BoardDTO;
 import org.zerock.bulletin.dto.PageRequestDTO;
+import org.zerock.bulletin.dto.PageResponseDTO;
 import org.zerock.bulletin.service.BoardService;
 
 @RequiredArgsConstructor
@@ -22,7 +23,10 @@ public class BoardController {
 
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
-        PageRequestDTO<BoardDTO> requestDTO =
+
+        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+
+        model.addAttribute("responseDTO",responseDTO);
 
     }
 

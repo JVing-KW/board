@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.awt.print.Pageable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -31,9 +32,9 @@ public class PageRequestDTO {
         return type.split("");
     }
 
-    public Pageable getPageable(String...props) {
-        return PageRequest.of(this.page -1, this.size, Sort.by(props).descending());
-    }
+//    public Pageable getPageable(String...props) {
+//        return PageRequest.of(this.page -1, this.size, Sort.by(props).descending());
+//    }
 
     private String link;
 
