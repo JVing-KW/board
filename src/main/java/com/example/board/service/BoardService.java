@@ -1,10 +1,8 @@
 package com.example.board.service;
 
-import com.example.board.domain.Board;
 import com.example.board.dto.BoardDTO;
 import com.example.board.dto.PageRequestDTO;
 import com.example.board.dto.PageResponseDTO;
-import org.springframework.data.domain.Page;
 
 public interface BoardService {
 
@@ -16,6 +14,6 @@ public interface BoardService {
 
      void modify(BoardDTO boardDTO);
 
-     PageResponseDTO<BoardDTO> getlist(PageRequestDTO pageRequestDTO);
+     PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO);
 
 }

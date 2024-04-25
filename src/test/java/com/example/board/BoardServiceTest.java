@@ -59,7 +59,7 @@ public class BoardServiceTest {
     public void listTest(){
     PageRequestDTO pageRequestDTO =  PageRequestDTO.builder().type("twc").keyword("1").page(1).size(10).build();
 
-        PageResponseDTO<BoardDTO> responseDTO = boardService.getlist(pageRequestDTO);
+        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
 
         log.info(responseDTO);
 
