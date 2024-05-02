@@ -3,14 +3,13 @@ package com.example.board.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
-
 
 @Data
 @Builder
@@ -24,6 +23,7 @@ public class ReplyDTO {
     private Long bno;
 
     @NotEmpty
+
     private String replyText;
 
     @NotEmpty
