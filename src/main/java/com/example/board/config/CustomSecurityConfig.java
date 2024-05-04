@@ -42,15 +42,15 @@ public class CustomSecurityConfig {
         // 람다로 고쳐서 써야함
         // authorizeHttpRequests 람다식으로 표현 6.1   버전이 이후로 (). 연결식으로 쓰는 방식이 폐지됨.
         // requestMatchers 로 url 어떤 요청에 hasRole로 누가 접근할 수 있는지 설정함
-        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                .requestMatchers("/board/register").authenticated());
-
-        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-
-                .requestMatchers("/member/login").permitAll()
-        ).formLogin(formLogin -> formLogin.loginPage("/member/login"));
-
+//        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+//                .requestMatchers("/board/register").authenticated());
+//        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+//                .requestMatchers("/member/login").permitAll()
+//        ).formLogin(formLogin -> formLogin.loginPage("/member/login"));
         http.csrf(csrf -> csrf.disable());
+
+        http.formLogin(formLogin->formLogin.loginPage("/member/login"));
+        //post 방식에 대해서 구현한 것이 없으나 Spring security 내부에서 처리 됨. html 버튼 post
 
         http.rememberMe(rememberMe -> rememberMe
                 .key("12345678")

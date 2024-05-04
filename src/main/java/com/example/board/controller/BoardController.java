@@ -38,7 +38,7 @@ public class BoardController {
 
     //요청에 대해서 어노테이션으로 관리할 수도 있음..
     //요청마다 따로 달려있어서 유지보수하기 힘들 수 있음.
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/register")
     public void registerGET(){
 
