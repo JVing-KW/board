@@ -8,6 +8,7 @@ import com.example.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,10 @@ public class BoardController {
 
     }
 
+
+    //요청에 대해서 어노테이션으로 관리할 수도 있음..
+    //요청마다 따로 달려있어서 유지보수하기 힘들 수 있음.
+//    @PreAuthorize("hasRole('USER')")
     @GetMapping("/register")
     public void registerGET(){
 
@@ -46,6 +51,7 @@ public class BoardController {
 
         if(bindingResult.hasErrors()) {
             log.info("has errors.......");
+            // 바인드 되는 모든 에러를 속성 errors에 담음
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors() );
             return "redirect:/board/register";
         }
@@ -58,19 +64,6 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
-
-
-//    @GetMapping("/read")
-//    public void read(Long bno, PageRequestDTO pageRequestDTO, Model model){
-//
-//        BoardDTO boardDTO = boardService.readOne(bno);
-//
-//        log.info(boardDTO);
-//
-//        model.addAttribute("dto", boardDTO);
-//
-//    }
-
 
     @GetMapping({"/read", "/modify"})
     public void read(Long bno, PageRequestDTO pageRequestDTO, Model model){

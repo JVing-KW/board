@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @Service
-public class BoardServiceImpl implements  BoardService{
+public class BoardServiceImpl implements BoardService {
 
     @Autowired
     BoardRepository boardRepository;
@@ -27,12 +27,13 @@ public class BoardServiceImpl implements  BoardService{
 
     @Override
     public Long register(BoardDTO boardDTO) {
-     Board board =   modelMapper.map(boardDTO, Board.class);
+        Board board = modelMapper.map(boardDTO, Board.class);
 
-      Long bno =  boardRepository.save(board).getBno();
+        Long bno = boardRepository.save(board).getBno();
 
-      return bno;
+        return bno;
     }
+
     @Override
     public void delete1(Long bno) {
         boardRepository.deleteById(bno);
@@ -43,8 +44,8 @@ public class BoardServiceImpl implements  BoardService{
     public BoardDTO readOne(Long bno) {
         Optional<Board> result = boardRepository.findById(bno);
         Board board = result.orElseThrow();
-    log.info(modelMapper.map(board,BoardDTO.class));
-        return  modelMapper.map(board,BoardDTO.class);
+        log.info(modelMapper.map(board, BoardDTO.class));
+        return modelMapper.map(board, BoardDTO.class);
     }
 
     // 1. findById로 Optional<T> 클래스를 사용해서 예외처리까지
@@ -62,29 +63,29 @@ public class BoardServiceImpl implements  BoardService{
         log.info("result.. :" + result);
 
         Board board = result.orElseThrow();
-        log.info("board.. :" +board );
+        log.info("board.. :" + board);
 
         board.change(boardDTO.getTitle(), boardDTO.getWriter());
 
-         boardRepository.save(board);
+        boardRepository.save(board);
 
     }
 
     @Override
     public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
-        String[] types  = pageRequestDTO.getTypes();
+        String[] types = pageRequestDTO.getTypes();
 
         String keyword = pageRequestDTO.getKeyword();
 
         Pageable pageable = pageRequestDTO.getPagebla("bno");
 
-        Page<Board> result = boardRepository.searchAll(types, keyword , pageable);
+        Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
 
         List<BoardDTO> dtoList = result.getContent().stream()
-                .map(board -> modelMapper.map(board , BoardDTO.class)).collect(Collectors.toList());
+                .map(board -> modelMapper.map(board, BoardDTO.class)).collect(Collectors.toList());
         return PageResponseDTO.<BoardDTO>withAll()
                 .pageRequestDTO(pageRequestDTO).dtoList(dtoList)
-                .total((int)result.getTotalElements()).build();
+                .total((int) result.getTotalElements()).build();
 
     }
 }
