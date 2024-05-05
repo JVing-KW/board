@@ -49,6 +49,8 @@
 
 <script layout:fragment="script" th:inline="javascript">
 
+    const auth =[[${authemtication.principal}]]
+
     const errors = [[${errors}]]
     console.log(errors)
 

@@ -54,7 +54,9 @@ public class CustomSecurityConfig {
 
         http.rememberMe(rememberMe -> rememberMe
                 .key("12345678")
-                .tokenRepository(persistentTokenRepository()));
+                .tokenRepository(persistentTokenRepository())
+                .userDetailsService(customUserDetailService)
+                .tokenValiditySeconds(60*60*24*10));
 
 
         //http.formLogin( formLogin -> formLogin.loginPage("member/login"));

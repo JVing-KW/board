@@ -20,6 +20,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
    private PasswordEncoder passwordEncoder;
    public CustomUserDetailService(){
+
        this.passwordEncoder = new BCryptPasswordEncoder();
    }
     @Override
