@@ -26,10 +26,12 @@ public class Member extends BaseEntity{
     private boolean del;
 
     private boolean social;
-
+    //FetchType 때문에 member.role 가지고 올 때 오류가 날 수 있음.
+    //FetchType 타입을 바꾸기보다
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
+    // final 느낌으로 변경되지 않게 사용해야됨.
 
     public void changePassword(String mpw ){
         this.mpw = mpw;
