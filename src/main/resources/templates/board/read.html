@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/basic.html}">
 
 <head>
@@ -17,6 +18,7 @@
                 <div class="card-body">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Bno</span>
+<!--                        dto 수정 boardDTO로 바꿔주는게 더 읽기 편할듯-->
                         <input type="text" class="form-control" th:value="${dto.bno}" readonly>
                     </div>
                     <div class="input-group mb-3">
@@ -66,6 +68,68 @@
 
 
 <script layout:fragment="script" th:inline="javascript">
+
+    const  currentUser = [[${#authentication.principal.username}}]]
+
+    const  bno = [[${dto.bno}}]]
+
+    const repltList= document.querySelector('.replyList')
+
+    const replyPaging = document.querySelector('replyPaging')
+
+    function  printList(dtoList){
+        let str = '';
+
+        if(dtoList && dtoList.length > 0){
+
+            for( const dto of dtoList){
+
+                str += `<li class="list-group-item d-flex replyItem">
+                      <span class="col-2">${dto.rno}</span>
+                      <span class="col-6" data-rno="${dto.rno}">${dto.replyText}</span>
+                      <span class="col-2">${dto.replyer}</span>
+                      <span class="col-2">${dto.regDate} </span>
+                    </li>`            }
+        }
+        replyList.innerHTML = str
+    }
+
+    function printPage(data){
+        //pagenation
+
+        let pageStr ='';
+
+        function printPages(data){ //페이지 목록 출력
+
+            //pagination
+            let pageStr = '';
+
+            if(data.prev) {
+                pageStr +=`<li class="page-item"><a class="page-link" data-page="${data.start-1}">PREV</a></li>`
+            }
+
+            for(let i = data.start; i <= data.end; i++){
+                pageStr +=`<li class="page-item ${i == data.page?"active":""} "><a class="page-link" data-page="${i}">${i}</a></li>`
+            }
+
+            if(data.next) {
+                pageStr +=`<li class="page-item"><a class="page-link" data-page="${data.end +1}">NEXT</a></li>`
+            }
+            replyPaging.innerHTML = pageStr
+        }
+    }
+
+    function printReplies(page, size,goLast){
+        getList({bno,page,size,goLast}).then(
+            data =>{
+                printList(data.dtoList);
+                printPages(data);
+            }
+        ).catch(e =>{
+            console.error(e)
+        })
+    }
+    printReplies(1,10, true)
 
 
 
