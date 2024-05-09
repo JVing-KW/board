@@ -53,10 +53,7 @@ public class BoardServiceImpl implements BoardService {
     // 2. 그냥 builder로 새로 엔티티 만들어서 save
     @Override
     public void modify(BoardDTO boardDTO) {
-//     Board board = Board.builder()
-//              .bno(boardDTO.getBno())
-//              .title(boardDTO.getTitle()+"22")
-//              .writer(boardDTO.getWriter()+"22").build();
+
 
 
         Optional<Board> result = boardRepository.findById(boardDTO.getBno());

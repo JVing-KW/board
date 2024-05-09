@@ -11,7 +11,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
-
+    //지연 로딩에 관해서 더 찾아보기
+    //@EntityGraph는 Data JPA에서 fect 조인을 어노테이션으로 사용할 수 있도록 만들어 준 기능이다
     @EntityGraph(attributePaths = "roleSet")
     @Query("select m from Member m where m.mid = :mid and m.social = false")
     Optional<Member> getWithRoles(String mid);

@@ -1,6 +1,7 @@
 package com.example.board.config;
 
 
+import com.example.board.handler.Custom403Handler;
 import com.example.board.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -11,10 +12,12 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -57,8 +60,8 @@ public class CustomSecurityConfig {
                 .tokenRepository(persistentTokenRepository())
                 .userDetailsService(customUserDetailService)
                 .tokenValiditySeconds(60*60*24*10));
-
-
+        http.exceptionHandling(exceptionHandling->exceptionHandling.accessDeniedHandler(accessDeniedHandler()));
+        
         //http.formLogin( formLogin -> formLogin.loginPage("member/login"));
         //loginPage를 지정하면 로그인이 필요한 경우에 자동으로 redirect 됨.
 
@@ -100,5 +103,10 @@ public class CustomSecurityConfig {
 
         return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return  new Custom403Handler();
+    }
+
 
 }

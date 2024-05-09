@@ -76,6 +76,7 @@ public class BoardController {
 
     }
 
+    @PreAuthorize("principal.username==#boardDTO.writer")
     @PostMapping("/modify")
     public String modify( PageRequestDTO pageRequestDTO,
                           @Valid BoardDTO boardDTO,
@@ -105,6 +106,8 @@ public class BoardController {
         return "redirect:/board/read";
     }
 
+
+    @PreAuthorize("principal.username==#boardDTO.writer")
 
     @PostMapping("/remove")
     public String remove(Long bno, RedirectAttributes redirectAttributes) {
