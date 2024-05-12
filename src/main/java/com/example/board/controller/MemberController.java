@@ -29,24 +29,24 @@ public class MemberController {
 
 
 
-//    @PostMapping("/join")
-//    public String joinPOST(MemberJoinDTO memberJoinDTO, RedirectAttributes redirectAttributes){
-//
-//        log.info("join post...");
-//        log.info(memberJoinDTO);
-//
-//        try {
-//            memberService.join(memberJoinDTO);
-//        } catch (MemberService.MidExistException e) {
-//
-//            redirectAttributes.addFlashAttribute("error", "mid");
-//            return "redirect:/member/join";
-//        }
-//
-//        redirectAttributes.addFlashAttribute("result", "success");
-//
-//        return "redirect:/member/login"; //회원 가입 후 로그인
-//    }
+    @PostMapping("/join")
+    public String joinPOST(MemberJoinDTO memberJoinDTO, RedirectAttributes redirectAttributes){
+
+        log.info("join post...");
+        log.info(memberJoinDTO);
+
+        try {
+            memberService.join(memberJoinDTO);
+        } catch (MemberService.MidExistException e) {
+
+            redirectAttributes.addFlashAttribute("error", "mid");
+            return "redirect:/member/join";
+        }
+
+        redirectAttributes.addFlashAttribute("result", "success");
+
+        return "redirect:/member/login"; //회원 가입 후 로그인
+    }
 
 
     @GetMapping("/login")

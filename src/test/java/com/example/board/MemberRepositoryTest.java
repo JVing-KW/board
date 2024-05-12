@@ -24,9 +24,27 @@ public class MemberRepositoryTest {
     MemberRepository memberRepository;
 
     @Test
-    public void jo(){
-      Optional<Member> member = memberRepository.getWithRoles("member1");
-      log.info(member);
+    public void jo() {
+        Optional<Member> member = memberRepository.getWithRoles("member1");
+        log.info(member);
+    }
+
+    @Test
+    public void insertTest() {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
+                    Member member = Member.builder()
+                            .mid("member" + i)
+                            .mpw(passwordEncoder.encode("1111"))
+                            .email("email" + i + "@aaa.bbb")
+                            .build();
+            member.addRole(MemberRole.USER);
+
+            if(i >= 90){
+                member.addRole(MemberRole.ADMIN);
+            }
+            memberRepository.save(member);
+                }
+        );
     }
 
 }

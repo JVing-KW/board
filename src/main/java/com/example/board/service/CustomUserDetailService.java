@@ -51,7 +51,7 @@ public class CustomUserDetailService implements UserDetailsService {
                         member.getRoleSet()
                                 //Collection<? extends GrantedAuthority> getAuthorities 는 계정이 갖고 있는 권한 목록 리턴하는 메서드다. 그래서 list타입으로 리넡
                                 //권한을 문자열로 바꿀때다루기 위해서 SimpleGrantedAuthority이용
-                                //스프링 시큐리티에서 Role_ + 권한 형태로 인식하기 때문에 
+                                //스프링 시큐리티에서 Role_ + 권한 형태로 인식하기 때문에
                                 .stream().map(memberRole -> new SimpleGrantedAuthority("ROLE_" + memberRole.name()))
                                 .collect(Collectors.toList())
                 );

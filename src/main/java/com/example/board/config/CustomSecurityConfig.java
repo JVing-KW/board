@@ -30,17 +30,16 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomSecurityConfig {
-    //remember_me 사용하기 위해 정해진 테이블 생성 후 데이터소스 관련 필요.
-    //주입 필요
+    //remember_me 기능을 사용하기 위해 정해진 테이블 생성 후 데이터소스 관련 필요.
+    //쿠키를 사용하기 위해 데이터 베이스를 다루기 위해 DataSource UserDetailService객체가 필요함
     private final DataSource dataSource;
     private final CustomUserDetailService customUserDetailService;
 
-    //1. config만 있을 때 모든 사용자에 대해서 필터 처리 로그인을 요구함
+    //1. config만 있을 때 모든 사용자에 대해서 필터 처리 로그인(인증)을 요구함
+    // 2. SecurityFilterChain 객체를 반환하는 메소드를 생성 시 아무 설정 없을시 모두가 접근할 수 있도록 해줌
+    // 어떤 유저가 접근하고 어디까지 접근해야할지 내가 정해줘야 함
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // 2. SecurityFilterChain 객체를 반환하는 메소드를 생성 시 아무 설정 없을시 모두가 접근할 수 있도록 해줌
-        // 어떤 유저가 접근하고 어디까지 접근해야할지 내가 정해줘야 함
-
 
         // 람다로 고쳐서 써야함
         // authorizeHttpRequests 람다식으로 표현 6.1   버전이 이후로 (). 연결식으로 쓰는 방식이 폐지됨.
@@ -50,9 +49,12 @@ public class CustomSecurityConfig {
 //        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
 //                .requestMatchers("/member/login").permitAll()
 //        ).formLogin(formLogin -> formLogin.loginPage("/member/login"));
+
+
+        //csrf토큰 get 외 방식으로 요청시 csrf토큰을 필요로 함 각 코드를 수정해야하므로 일단 사용하지 않기로 한다.
         http.csrf(csrf -> csrf.disable());
 
-        http.formLogin(formLogin->formLogin.loginPage("/member/login"));
+        http.formLogin(formLogin->formLogin.loginPage("/member/login").defaultSuccessUrl("/board/list"));
         //post 방식에 대해서 구현한 것이 없으나 Spring security 내부에서 처리 됨. html 버튼 post
 
         http.rememberMe(rememberMe -> rememberMe
@@ -60,8 +62,10 @@ public class CustomSecurityConfig {
                 .tokenRepository(persistentTokenRepository())
                 .userDetailsService(customUserDetailService)
                 .tokenValiditySeconds(60*60*24*10));
+
         http.exceptionHandling(exceptionHandling->exceptionHandling.accessDeniedHandler(accessDeniedHandler()));
-        
+        http.oauth2Login(loginPage -> loginPage.loginPage("/member/login"));
+
         //http.formLogin( formLogin -> formLogin.loginPage("member/login"));
         //loginPage를 지정하면 로그인이 필요한 경우에 자동으로 redirect 됨.
 

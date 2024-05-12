@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.Map;
 
 
 @Getter
@@ -20,6 +21,8 @@ public class MemberSecurityDTO extends User {
     private boolean del;
     private boolean social;
 
+    private Map<String, Object> props; //소셜 로그인 정보
+
 
     public MemberSecurityDTO(String username, String password, String email, boolean del, boolean social,
                              Collection<? extends GrantedAuthority> authorities) {
@@ -31,4 +34,14 @@ public class MemberSecurityDTO extends User {
         this.social = social;
 
     }
+
+    public Map<String, Object> attribute(){
+
+        return this.props;
+    }
+
+//    @Override
+//    public String getName() {
+//        return this.mid;
+//    }
 }
