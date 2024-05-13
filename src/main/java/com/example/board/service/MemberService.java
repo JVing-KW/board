@@ -7,7 +7,13 @@ public interface MemberService {
     static class MidExistException extends Exception {
 
     }
+    static class MpwExistException extends Exception {
+
+    }
 
     void join(MemberJoinDTO memberJoinDTO) throws MidExistException;
+
+    void modify(MemberJoinDTO memberJoinDTO) throws MidExistException;
+
 
 }

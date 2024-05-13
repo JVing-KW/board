@@ -2,6 +2,7 @@ package com.example.board.config;
 
 
 import com.example.board.handler.Custom403Handler;
+import com.example.board.handler.CustomSocialLoginSuccessHandler;
 import com.example.board.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -56,6 +58,7 @@ public class CustomSecurityConfig {
 
         http.formLogin(formLogin->formLogin.loginPage("/member/login").defaultSuccessUrl("/board/list"));
         //post 방식에 대해서 구현한 것이 없으나 Spring security 내부에서 처리 됨. html 버튼 post
+        http.oauth2Login(loginPage -> loginPage.loginPage("/member/login").successHandler(authenticationSuccessHandler()));
 
         http.rememberMe(rememberMe -> rememberMe
                 .key("12345678")
@@ -64,7 +67,6 @@ public class CustomSecurityConfig {
                 .tokenValiditySeconds(60*60*24*10));
 
         http.exceptionHandling(exceptionHandling->exceptionHandling.accessDeniedHandler(accessDeniedHandler()));
-        http.oauth2Login(loginPage -> loginPage.loginPage("/member/login"));
 
         //http.formLogin( formLogin -> formLogin.loginPage("member/login"));
         //loginPage를 지정하면 로그인이 필요한 경우에 자동으로 redirect 됨.
@@ -112,5 +114,9 @@ public class CustomSecurityConfig {
         return  new Custom403Handler();
     }
 
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+        return new CustomSocialLoginSuccessHandler(passwordEncoder());
+    }
 
 }

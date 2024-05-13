@@ -42,4 +42,23 @@ public class MemberServiceImpl implements MemberService{
         log.info(member.getRoleSet());
         memberRepository.save(member);
     }
+
+    @Override
+    public void modify(MemberJoinDTO memberJoinDTO)throws MidExistException {
+
+        String mid = memberJoinDTO.getMid();
+
+
+         if(memberJoinDTO.getMpw().equals("1111")){
+            throw new MidExistException();
+        }
+
+        Member member = modelMapper.map(memberJoinDTO, Member.class);
+        member.changePassword(passwordEncoder.encode(memberJoinDTO.getMpw()));
+        log.info("=======================");
+        log.info(member);
+        memberRepository.save(member);
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.example.board.controller;
 
 
 import com.example.board.dto.MemberJoinDTO;
+import com.example.board.dto.MemberSecurityDTO;
 import com.example.board.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -48,7 +49,27 @@ public class MemberController {
         return "redirect:/member/login"; //회원 가입 후 로그인
     }
 
+    @GetMapping("modify")
+    public void modifyGET(   ){
 
+
+    }
+    @PostMapping("modify")
+    public String modifyPost(MemberJoinDTO memberJoinDTO,RedirectAttributes redirectAttributes){
+//        memberService
+
+        try {
+            memberService.join(memberJoinDTO);
+
+        } catch (MemberService.MidExistException e ) {
+            //     두 가지 상황에 대해서 예외처리? 그냥 if문?
+            redirectAttributes.addFlashAttribute("error", "mid");
+            return "redirect:/member/modify";
+        }
+        redirectAttributes.addFlashAttribute("result", "success");
+        redirectAttributes.addFlashAttribute("dto", memberJoinDTO);
+     return "redirect:/member/login";
+    }
     @GetMapping("/login")
     public void loginGET(String error, String logout) {
         log.info("login get..............");

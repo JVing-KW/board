@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Commit;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
@@ -45,6 +46,14 @@ public class MemberRepositoryTest {
             memberRepository.save(member);
                 }
         );
+    }
+    @Test
+    @Commit //트랜잭션 어노테이션
+    public void testUpdate(){
+        String mid = "cookie_00@naver.com";
+
+    String mpw = passwordEncoder.encode("54321");
+    memberRepository.updatePassword(mpw,mid);
     }
 
 }
