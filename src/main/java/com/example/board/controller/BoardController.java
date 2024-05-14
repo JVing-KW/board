@@ -34,6 +34,11 @@ public class BoardController {
         model.addAttribute("responseDTO", responseDTO);
 
     }
+    @GetMapping("/map")
+    public void map(){
+        log.info("go to map...");
+
+    }
 
 
     //요청에 대해서 어노테이션으로 관리할 수도 있음..
