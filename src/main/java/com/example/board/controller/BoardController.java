@@ -8,6 +8,8 @@ import com.example.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,6 +65,16 @@ public class BoardController {
         redirectAttributes.addFlashAttribute("result", bno);
 
         return "redirect:/board/list";
+    }
+    @GetMapping("/test")
+    public void forTest(@RequestParam String name , String password){
+
+    }
+    @GetMapping("/map")
+    public ResponseEntity map(String query){
+
+         return  ResponseEntity.ok().header("Authorization",
+                 "KakaoAK" + " 83d33e5006b830e8a91dd85c53aa573c").build();
     }
 
     @GetMapping({"/read", "/modify"})
