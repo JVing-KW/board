@@ -32,7 +32,8 @@ public class BoardServiceTest {
                 content("내용").
                 writer("기우").
                 regDate(now()).build();
-     Long bno = boardService.register(boardDTO);
+//        Long bno = boardRepository.save(board).getBno();
+        Long bno = boardService.register(boardDTO);
      log.info(bno);
     }
     @Test

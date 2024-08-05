@@ -34,15 +34,16 @@ public class MemberServiceImpl implements MemberService{
         }
 
         Member member = modelMapper.map(memberJoinDTO, Member.class);
+        //비밀번호  Encoding은 서비스 레이어로 빼기?
         member.changePassword(passwordEncoder.encode(memberJoinDTO.getMpw()));
+        //MemberRole은 여기서 직접 넣어줌.
         member.addRole(MemberRole.USER);
 
         log.info("=======================");
         log.info(member);
         log.info(member.getRoleSet());
         memberRepository.save(member);
-    }
-
+    }w
     @Override
     public void modify(MemberJoinDTO memberJoinDTO)throws MidExistException {
 

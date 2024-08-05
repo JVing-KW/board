@@ -4,7 +4,6 @@ import com.example.board.dto.PageRequestDTO;
 import com.example.board.dto.PageResponseDTO;
 import com.example.board.dto.ReplyDTO;
 import com.example.board.service.ReplyService;
-import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -27,7 +26,7 @@ public class ReplyController {
 
 
 
-    @ApiOperation(value = "Replies POST", notes = "POST 방식으로 댓글 등록")
+//    @ApiOperationonn(value = "Replies POST", notes = "POST 방식으로 댓글 등록")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String,Long> register(
             @Valid @RequestBody ReplyDTO replyDTO,
@@ -48,7 +47,7 @@ public class ReplyController {
         return resultMap;
     }
 
-    @ApiOperation(value = "Replies of Board", notes = "GET 방식으로 특정 게시물의 댓글 목록")
+//    @ApiOperation(value = "Replies of Board", notes = "GET 방식으로 특정 게시물의 댓글 목록")
     @GetMapping(value = "/list/{bno}")
     public PageResponseDTO<ReplyDTO> getList(@PathVariable("bno") Long bno,
                                              PageRequestDTO pageRequestDTO){
@@ -58,7 +57,7 @@ public class ReplyController {
         return responseDTO;
     }
 
-    @ApiOperation(value = "Read Reply", notes = "GET 방식으로 특정 댓글 조회")
+//    @ApiOperation(value = "Read Reply", notes = "GET 방식으로 특정 댓글 조회")
     @GetMapping("/{rno}")
     public ReplyDTO getReplyDTO( @PathVariable("rno") Long rno ){
 
@@ -67,7 +66,7 @@ public class ReplyController {
         return replyDTO;
     }
 
-    @ApiOperation(value = "Delete Reply", notes = "DELETE 방식으로 특정 댓글 삭제")
+//    @ApiOperation(value = "Delete Reply", notes = "DELETE 방식으로 특정 댓글 삭제")
     @DeleteMapping("/{rno}")
     public Map<String,Long> remove( @PathVariable("rno") Long rno ){
 
@@ -82,7 +81,7 @@ public class ReplyController {
 
 
 
-    @ApiOperation(value = "Modify Reply", notes = "PUT 방식으로 특정 댓글 수정")
+//    @ApiOperation(value = "Modify Reply", notes = "PUT 방식으로 특정 댓글 수정")
     @PutMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE )
     public Map<String,Long> remove( @PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO ){
 

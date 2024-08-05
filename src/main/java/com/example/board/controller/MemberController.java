@@ -29,7 +29,6 @@ public class MemberController {
     }
 
 
-
     @PostMapping("/join")
     public String joinPOST(MemberJoinDTO memberJoinDTO, RedirectAttributes redirectAttributes){
 

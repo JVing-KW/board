@@ -1,7 +1,6 @@
 package com.example.board.controller;
 import com.example.board.dto.upload.UploadFileDTO;
 import com.example.board.dto.upload.UploadResultDTO;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +25,7 @@ public class UpDownController {
 //    @Value("${com.example.upload.path}")// import 시에 springframework으로 시작하는 Value
     private String uploadPath;
 
-    @ApiOperation(value = "Upload POST", notes = "POST 방식으로 파일 등록")
+//    @ApiOperation(value = "Upload POST", notes = "POST 방식으로 파일 등록")
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<UploadResultDTO> upload(UploadFileDTO uploadFileDTO){
 
@@ -79,7 +78,7 @@ public class UpDownController {
     }
 
 
-    @ApiOperation(value = "view 파일", notes = "GET방식으로 첨부파일 조회")
+//    @ApiOperation(value = "view 파일", notes = "GET방식으로 첨부파일 조회")
     @GetMapping("/view/{fileName}")
     public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName){
 
@@ -95,7 +94,7 @@ public class UpDownController {
         return ResponseEntity.ok().headers(headers).body(resource);
     }
 
-    @ApiOperation(value = "remove 파일", notes = "DELETE 방식으로 파일 삭제")
+//    @ApiOperation(value = "remove 파일", notes = "DELETE 방식으로 파일 삭제")
     @DeleteMapping("/remove/{fileName}")
     public Map<String,Boolean> removeFile(@PathVariable String fileName){
 
